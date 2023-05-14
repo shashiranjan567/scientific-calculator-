@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+// Define the available operations
+double add(double x, double y) { return x + y; }
+double subtract(double x, double y) { return x - y; }
+double multiply(double x, double y) { return x * y; }
+double divide(double x, double y) { return x / y; }
+double power(double x, double y) { return pow(x, y); }
+double square_root(double x) { return sqrt(x); }
+double sine(double x) { return sin(x); }
+double cosine(double x) { return cos(x); }
+double tangent(double x) { return tan(x); }
+double logarithm(double x) { return log10(x); }
+double natural_logarithm(double x) { return log(x); }
+
+// Main calculator loop
+int main() {
+    // Define variables
+    char input[100];
+    char *token;
+    double num1, num2, result;
+    
+    // Loop until user enters "quit"
+    while(1) {
+        // Get user input
+        printf("Enter an expression or 'quit' to exit: ");
+        fgets(input, 100, stdin);
+        input[strcspn(input, "\n")] = 0;  // Remove trailing newline character
+        
+        // Check for exit command
+        if (strcmp(input, "quit") == 0) {
+            break;
+        }
+        
+        // Split the user input into tokens
+        token = strtok(input, " ");
+        
+        // Convert the first token to a number
+        num1 = atof(token);
+        
+        // Process the tokens
+        while (token != NULL) {
+            // Get the next token
+            token = strtok(NULL, " ");
+            
+            // Check if the token is an operator
+            if (token != NULL) {
+                // Convert the next token to a number
+                num2 = atof(token);
+                
+                // Perform the operation
+                if (strcmp(token, "+") == 0) {
+                    result = add(num1, num2);
+                } else if (strcmp(token, "-") == 0) {
+                    result = subtract(num1, num2);
+                } else if (strcmp(token, "*") == 0) {
+                    result = multiply(num1, num2);
+                } else if (strcmp(token, "/") == 0) {
+                    result = divide(num1, num2);
+                } else if (strcmp(token, "^") == 0) {
+                    result = power(num1, num2);
+                } else if (strcmp(token, "sqrt") == 0) {
+                    result = square_root(num1);
+                } else if (strcmp(token, "sin") == 0) {
+                    result = sine(num1);
+                } else if (strcmp(token, "cos") == 0) {
+                    result = cosine(num1);
+                } else if (strcmp(token, "tan") == 0) {
+                    result = tangent(num1);
+                } else if (strcmp(token, "log") == 0) {
+                    result = logarithm(num1);
+                } else if (strcmp(token, "ln") == 0) {
+                    result = natural_logarithm(num1);
+                }
+                
+                // Set the result as the first number for the next operation
+                num1 = result;
+            }
+        }
+        
+        // Print the result
+        printf("Result: %lf\n", result);
+    }
+    
+    return 0;
+}
